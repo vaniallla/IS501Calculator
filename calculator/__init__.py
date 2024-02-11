@@ -1,77 +1,69 @@
-class Operation:  
-  @staticmethod
-  def add(x, y):
-    return x + y
-  
-  @staticmethod
-  def subtract(x, y):
-    return x - y
-  
-  @staticmethod
-  def multiply(x, y):
-    return x * y
-  
-  @staticmethod
-  def divide(x, y):
-    if y != 0:
-      return x / y
-    else: return "Error division by zero"
+"""This module is a calculator"""
+
+class Operation:
+    """ Class for standard operations """
+    @staticmethod
+    def add(num1, num2):
+        """add function"""
+        return num1 + num2
+
+    @staticmethod
+    def subtract(num1, num2):
+        """subtract function"""
+        return num1 - num2
+
+    @staticmethod
+    def multiply(num1, num2):
+        """multiply function"""
+        return num1 * num2
+
+    @staticmethod
+    def divide(num1, num2):
+        """divide function"""
+        if num2 != 0:
+            return num1 / num2
+        raise ZeroDivisionError
 
 class Calculation:
-  def __init__(self, num1, num2, operator):
-    self.num1 = num1
-    self.num2 = num2
-    if operator == "+":
-      self.operation = "add"
-    elif operator == "-":
-      self.operation = "subtract"
-    elif operator == "*":
-      self.operation == "multiply"
-    elif operator == "/":
-      self.operation == "divide"
-  
-  def compute(self):
-    return self.operation(self.num1, self.num2)
+    """ Class to compute operations """
+    def __init__(self, num1: float, num2: float, operation: str):
+        self.num1 = num1
+        self.num2 = num2
+        self.operation = operation
 
+    def compute(self):
+        """ Compute function """
+        return self.operation(self.num1, self.num2)
 
 class CalculationHistory:
-  history = []
+    """ Class to save calculation history"""
+    history = []
 
-  @classmethod
-  def addHistory(cls, answer):
-    cls.history.append(answer)
-  
-  @classmethod
-  def getHistory(cls):
-    return cls.history
+    @classmethod
+    def add_history(cls, answer):
+        """ method to add a calculation to history"""
+        cls.history.append(answer)
+
+    @classmethod
+    def get_history(cls):
+        """ Method to get history"""
+        return cls.history
 
 class Calculator:
-  
-  def __init__(self):
-    self.operations = Operation()
-  
-  def doCalc(self, num1, num2, operator):
-    calculation = Calculation(num1, num2, operator)
-    result = calculation.compute
-    CalculationHistory.addHistory(calculation)
-    return result
-  
-  def getCalcHistory(self):
-    return CalculationHistory.getHistory()
+    """Class to create calc obj"""
+    def __init__(self):
+        self.operations = Operation()
 
+    def do_calc(self, num1: float, num2: float, operation: str):
+        """Method to use Calculator obj to do calc"""
+        calculation = Calculation(num1, num2, operation)
+        result = calculation.compute()
+        CalculationHistory.add_history(calculation)
+        return result
 
-validOperators = ["+", "-", "*", "/"]
-try:
-  print ("Please enter the first number of your equation")
-  num1 = float(input())
-  print ("Please enter the operator of your equation.")
-  operator = str(input())
-  print ("Please enter the second number of your equation")
-  num2 = float(input())
-except: 
-  print ("Invalid input, please try again.")
-else:
-  if operator not in validOperators: raise Exception("Invalid operator inputted. Valid operators are +, -, *, /")
+    def get_calc_history(self):
+        """Method to get calculation history"""
+        return CalculationHistory.get_history()
 
 calculator = Calculator()
-print(calculator.doCalc(num1, num2, operator))
+print(calculator.do_calc(1, 2, Operation.add))
