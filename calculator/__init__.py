@@ -66,4 +66,4 @@ class Calculator:
         return CalculationHistory.get_history()
 
 calculator = Calculator()
-print(calculator.do_calc(1, 2, Operation.add))
+print(calculator.do_calc(2, 0, Operation.add))
